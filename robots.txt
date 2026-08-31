@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://e4124659-ux.github.io/niche-ai-tools-guide/sitemap.xml

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Tools Radar - Honest reviews and comparisons of the best AI tools for developers, marketers, and creators. Earn with our affiliate recommendations.">
+    <meta name="keywords" content="AI tools, AI comparison, best AI tools 2025, AI affiliate, developer tools, AI software reviews">
+    <meta name="author" content="AI Tools Radar">
+    <title>AI Tools Radar | Best AI Tools Compared & Reviewed</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a28;
+            --accent: #6366f1;
+            --accent-glow: #818cf8;
+            --accent-secondary: #06b6d4;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --border: #2d2d3d;
+            --gradient-1: linear-gradient(135deg, #6366f1, #06b6d4);
+            --gradient-2: linear-gradient(135deg, #f59e0b, #ef4444);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none; z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed; width: 600px; height: 600px; border-radius: 50%;
+            filter: blur(150px); opacity: 0.12; pointer-events: none; z-index: 0;
+        }
+        .bg-glow-1 { top: -200px; left: -200px; background: var(--accent); }
+        .bg-glow-2 { bottom: -200px; right: -200px; background: var(--accent-secondary); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(10,10,15,0.85); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .logo {
+            font-size: 1.4rem; font-weight: 800;
+            background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; text-decoration: none; letter-spacing: -0.5px;
+        }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-cta {
+            background: var(--gradient-1); color: white; padding: 8px 20px; border-radius: 8px;
+            font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(99,102,241,0.4); }
+
+        /* Hero */
+        .hero {
+            padding: 160px 0 100px; text-align: center; position: relative;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2);
+            padding: 6px 16px; border-radius: 100px; font-size: 0.85rem;
+            color: var(--accent-glow); margin-bottom: 24px; font-weight: 500;
+        }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -1.5px; }
+        .hero h1 span { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            background: var(--gradient-1); color: white; padding: 14px 32px; border-radius: 12px;
+            font-weight: 600; font-size: 1rem; text-decoration: none; border: none; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,0.4); }
+        .btn-secondary {
+            background: var(--bg-card); color: var(--text-primary); padding: 14px 32px; border-radius: 12px;
+            font-weight: 600; font-size: 1rem; text-decoration: none; border: 1px solid var(--border); cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .btn-secondary:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+        /* Search */
+        .search-section { padding: 0 0 60px; position: relative; z-index: 1; }
+        .search-container { max-width: 700px; margin: 0 auto; }
+        .search-box {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 8px 20px; transition: border-color 0.3s;
+        }
+        .search-box:focus-within { border-color: var(--accent); }
+        .search-box input { flex: 1; background: none; border: none; color: var(--text-primary); font-size: 1rem; outline: none; }
+        .search-box input::placeholder { color: var(--text-muted); }
+        .search-box svg { color: var(--text-muted); flex-shrink: 0; }
+
+        /* Sections */
+        .section { padding: 80px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
+        .section-header p { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .section-header .tag {
+            display: inline-block; background: rgba(6,182,212,0.1); color: var(--accent-secondary);
+            padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px;
+        }
+
+        /* Categories Grid */
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .category-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 32px; cursor: pointer; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .category-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient-1); opacity: 0; transition: opacity 0.3s;
+        }
+        .category-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(99,102,241,0.15); }
+        .category-card:hover::before { opacity: 1; }
+        .category-icon { font-size: 2.5rem; margin-bottom: 16px; }
+        .category-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+        .category-card p { color: var(--text-secondary); font-size: 0.9rem; }
+        .category-meta { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+        .category-count { font-size: 0.8rem; color: var(--text-muted); }
+        .category-arrow { margin-left: auto; color: var(--accent); transition: transform 0.2s; }
+        .category-card:hover .category-arrow { transform: translateX(4px); }
+
+        /* Tools Grid */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; }
+        .tool-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            overflow: hidden; transition: border-color 0.3s, transform 0.3s;
+        }
+        .tool-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+        .tool-header { padding: 24px 24px 0; display: flex; justify-content: space-between; align-items: flex-start; }
+        .tool-name { font-size: 1.2rem; font-weight: 700; }
+        .tool-category { font-size: 0.75rem; color: var(--accent-secondary); background: rgba(6,182,212,0.1); padding: 3px 10px; border-radius: 100px; }
+        .tool-body { padding: 16px 24px; }
+        .tool-desc { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; }
+        .tool-features { list-style: none; margin-bottom: 20px; }
+        .tool-features li { color: var(--text-secondary); font-size: 0.85rem; padding: 4px 0; display: flex; align-items: center; gap: 8px; }
+        .tool-features li::before { content: '✓'; color: var(--success); font-weight: 700; }
+        .tool-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .tool-commission { font-size: 0.85rem; color: var(--success); font-weight: 600; }
+        .tool-commission span { font-size: 0.75rem; color: var(--text-muted); font-weight: 400; }
+        .tool-link {
+            background: var(--gradient-1); color: white; padding: 8px 20px; border-radius: 8px;
+            text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .tool-link:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(99,102,241,0.4); }
+
+        /* Rating badges */
+        .rating { display: flex; align-items: center; gap: 4px; }
+        .rating-stars { color: var(--warning); }
+        .rating-text { color: var(--text-muted); font-size: 0.85rem; }
+
+        /* Comparison Table */
+        .comparison-section { overflow-x: auto; }
+        .comparison-table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        .comparison-table th {
+            background: var(--bg-secondary); padding: 16px 20px; text-align: left; font-weight: 600;
+            border-bottom: 2px solid var(--border); color: var(--text-secondary); font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .comparison-table td { padding: 16px 20px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        .comparison-table tr:hover td { background: rgba(99,102,241,0.05); }
+        .tool-name-cell { font-weight: 700; }
+        .commission-cell { color: var(--success); font-weight: 600; }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px;
+            margin-bottom: 60px; text-align: center;
+        }
+        .stat-number { font-size: 2.5rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .stat-label { color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px; }
+
+        /* Article-style content */
+        .article-content {
+            max-width: 800px; margin: 0 auto;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 48px;
+        }
+        .article-content h2 { font-size: 1.8rem; margin: 32px 0 16px; letter-spacing: -0.5px; }
+        .article-content h2:first-child { margin-top: 0; }
+        .article-content p { color: var(--text-secondary); margin-bottom: 16px; }
+        .article-content ul { margin: 16px 0; padding-left: 24px; }
+        .article-content li { color: var(--text-secondary); margin-bottom: 8px; }
+        .highlight-box {
+            background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2);
+            border-radius: 12px; padding: 24px; margin: 24px 0;
+        }
+        .highlight-box strong { color: var(--accent-glow); }
+
+        /* Disclosure */
+        .disclosure {
+            background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2);
+            border-radius: 12px; padding: 20px 24px; margin: 40px 0;
+            font-size: 0.9rem; color: var(--text-secondary);
+        }
+        .disclosure strong { color: var(--warning); }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border); padding: 48px 0; margin-top: 80px;
+            text-align: center; color: var(--text-muted); font-size: 0.9rem;
+        }
+        footer a { color: var(--accent-secondary); text-decoration: none; }
+        .footer-links { display: flex; justify-content: center; gap: 32px; margin-bottom: 24px; }
+
+        /* Tags */
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+        .tag {
+            background: var(--bg-card); border: 1px solid var(--border); padding: 6px 16px;
+            border-radius: 100px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .tag:hover { border-color: var(--accent); color: var(--text-primary); }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .hero h1 { font-size: 2.2rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .stats-bar { padding: 32px; }
+            .article-content { padding: 24px; margin: 0 16px; }
+            .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: rgba(10,10,15,0.98); padding: 24px; border-bottom: 1px solid var(--border); }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate { animation: fadeInUp 0.6s ease forwards; }
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+        /* Scroll reveal */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo">⚡ AI Tools Radar</a>
+            <div class="nav-links" id="navLinks">
+                <a href="#categories">Categories</a>
+                <a href="#compare">Compare</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#about">About</a>
+                <a href="#affiliate" class="nav-cta">Affiliate Program</a>
+            </div>
+            <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('active')">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge animate">🔥 Updated August 2025 • 50+ Tools Reviewed</div>
+            <h1 class="animate delay-1">Find the <span>Best AI Tools</span><br>For Your Workflow</h1>
+            <p class="animate delay-2">Honest, data-driven comparisons of the top AI tools for developers, marketers, and creators. Every recommendation is independently reviewed — no brand pays for placement.</p>
+            <div class="hero-buttons animate delay-3">
+                <a href="#categories" class="btn-primary">Browse All Tools →</a>
+                <a href="#compare" class="btn-secondary">Quick Comparison</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="container">
+        <div class="stats-bar reveal">
+            <div><div class="stat-number">50+</div><div class="stat-label">Tools Reviewed</div></div>
+            <div><div class="stat-number">40%</div><div class="stat-label">Avg. Affiliate Commission</div></div>
+            <div><div class="stat-number">$0</div><div class="stat-label">Cost to You</div></div>
+            <div><div class="stat-number">100%</div><div class="stat-label">Independent Reviews</div></div>
+        </div>
+    </div>
+
+    <!-- Search -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container reveal">
+                <div class="search-box">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search AI tools (e.g., ChatGPT, Cursor, Notion AI...)" id="searchInput" oninput="filterTools()">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="section" id="categories">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="tag">CATEGORIES</div>
+                <h2>Explore by Category</h2>
+                <p>Find the perfect AI tool for your specific needs from our curated categories</p>
+            </div>
+            <div class="categories-grid reveal">
+                <div class="category-card" onclick="filterByCategory('coding')">
+                    <div class="category-icon">💻</div>
+                    <h3>AI Coding Assistants</h3>
+                    <p>Code generation, debugging, and IDE integration</p>
+                    <div class="category-meta">
+                        <span class="category-count">8 tools</span>
+                        <span class="category-arrow">→</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('writing')">
+                    <div class="category-icon">✍️</div>
+                    <h3>AI Writing & Content</h3>
+                    <p>Blog posts, copywriting, and content generation</p>
+                    <div class="category-meta">
+                        <span class="category-count">10 tools</span>
+                        <span class="category-arrow">→</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('design')">
+                    <div class="category-icon">🎨</div>
+                    <h3>AI Design & Images</h3>
+                    <p>Image generation, video editing, and design</p>
+                    <div class="category-meta">
+                        <span class="category-count">7 tools</span>
+                        <span class="category-arrow">→</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('productivity')">
+                    <div class="category-icon">🚀</div>
+                    <h3>AI Productivity</h3>
+                    <p>Task management, scheduling, and automation</p>
+                    <div class="category-meta">
+                        <span class="category-count">6 tools</span>
+                        <span class="category-arrow">→</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('voice')">
+                    <div class="category-icon">🎙️</div>
+                    <h3>AI Voice & Audio</h3>
+                    <p>Text-to-speech, transcription, and voice cloning</p>
+                    <div class="category-meta">
+                        <span class="category-count">5 tools</span>
+                        <span class="category-arrow">→</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('marketing')">
+                    <div class="category-icon">📈</div>
+                    <h3>AI Marketing & SEO</h3>
+                    <p>SEO optimization, analytics, and social media</p>
+                    <div class="category-meta">
+                        <span class="category-count">8 tools</span>
+                        <span class="category-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Tools -->
+    <section class="section" id="featured">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="tag">TOP PICKS</div>
+                <h2>Our Highest-Rated Tools</h2>
+                <p>These AI tools offer the best combination of features, pricing, and affiliate value</p>
+            </div>
+            <div class="tools-grid" id="toolsGrid">
+                <!-- Tools will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison -->
+    <section class="section" id="compare" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="tag">COMPARISON</div>
+                <h2>AI Coding Tools Compared</h2>
+                <p>Side-by-side comparison of the top AI coding assistants</p>
+            </div>
+            <div class="comparison-section reveal">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Best For</th>
+                            <th>Price</th>
+                            <th>Commission</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="tool-name-cell">Cursor</td>
+                            <td>AI-native IDE</td>
+                            <td>Free / $20/mo</td>
+                            <td class="commission-cell">30% recurring</td>
+                            <td><span class="rating"><span class="rating-stars">★★★★★</span> <span class="rating-text">4.9/5</span></span></td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name-cell">GitHub Copilot</td>
+                            <td>Enterprise teams</td>
+                            <td>$19/mo</td>
+                            <td class="commission-cell">20% recurring</td>
+                            <td><span class="rating"><span class="rating-stars">★★★★☆</span> <span class="rating-text">4.7/5</span></span></td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name-cell">Claude Code</td>
+                            <td>Complex reasoning</td>
+                            <td>$20/mo</td>
+                            <td class="commission-cell">30% recurring</td>
+                            <td><span class="rating"><span class="rating-stars">★★★★★</span> <span class="rating-text">4.8/5</span></span></td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name-cell">Windsurf</td>
+                            <td>Autonomous coding</td>
+                            <td>Free / $15/mo</td>
+                            <td class="commission-cell">30% recurring</td>
+                            <td><span class="rating"><span class="rating-stars">★★★★☆</span> <span class="rating-text">4.6/5</span></span></td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name-cell">Continue.dev</td>
+                            <td>Open source</td>
+                            <td>Free</td>
+                            <td class="commission-cell">30% recurring</td>
+                            <td><span class="rating"><span class="rating-stars">★★★★☆</span> <span class="rating-text">4.5/5</span></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article-style Review -->
+    <section class="section" id="reviews">
+        <div class="container">
+            <div class="article-content reveal">
+                <div class="tag">DEEP REVIEW</div>
+                <h2>The Ultimate Guide to AI Coding Tools in 2025</h2>
+                <p>The landscape of AI-powered development tools has exploded in 2025. From AI-native IDEs to autonomous coding agents, developers now have more options than ever. But which tools are actually worth your time and money?</p>
+                
+                <h2>The Rise of AI-Native Development</h2>
+                <p>We've moved far beyond simple code completion. Today's AI coding tools can architect entire applications, debug complex issues, and even deploy projects autonomously. The key differentiator is no longer just accuracy — it's the ability to handle multi-file contexts, follow project conventions, and iterate on feedback.</p>
+                
+                <div class="highlight-box">
+                    <p><strong>Key finding:</strong> Tools combining large context windows with agentic capabilities (like Cursor and Claude Code) are pulling ahead of the pack. The 50-100x context improvements over early tools translate to dramatically better accuracy.</p>
+                </div>
+
+                <h2>Top Pick: Cursor</h2>
+                <p>Cursor has established itself as the leading AI-native code editor. Built on VS Code's massive extension ecosystem, it offers AI chat, inline editing, multi-file editing, and a powerful Cmd+K interface. Its Composer feature can generate entire files from natural language descriptions.</p>
+                <ul>
+                    <li><strong>Best for:</strong> Developers who want the full VS Code experience with AI superpowers</li>
+                    <li><strong>Price:</strong> Free tier generous; Pro at $20/month</li>
+                    <li><strong>Commission:</strong> 30% recurring — one of the best in the industry</li>
+                    <li><strong>Unique advantage:</strong> Uses multiple models (GPT-4, Claude, custom models) side-by-side</li>
+                </ul>
+
+                <h2>Runner-Up: Claude Code</h2>
+                <p>Anthropic's terminal-based coding agent excels at complex, multi-step reasoning. Its 200K context window means it can ingest entire codebases and provide deeply informed suggestions. The agentic mode allows it to autonomously make changes across multiple files.</p>
+                <ul>
+                    <li><strong>Best for:</strong> Complex refactoring and large codebase understanding</li>
+                    <li><strong>Price:</strong> $20/month for Pro; $200/month for Max</li>
+                    <li><strong>Commission:</strong> 30% recurring via affiliate program</li>
+                    <li><strong>Unique advantage:</strong> Unmatched reasoning and security-focused AI</li>
+                </ul>
+
+                <h2>How to Choose</h2>
+                <p>If you want an all-in-one IDE experience, go with <strong>Cursor</strong>. If you prefer terminal-based agentic workflows, <strong>Claude Code</strong> is unmatched. For teams, <strong>GitHub Copilot</strong> integrates seamlessly with enterprise workflows.</p>
+
+                <div class="discovery">
+                    <p><strong>💡 Pro tip:</strong> Many of these tools offer affiliate programs with 30%+ recurring commissions. By simply sharing honest reviews, you can generate passive income while helping other developers find the right tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclosure -->
+    <section class="section">
+        <div class="container">
+            <div class="disclosure reveal">
+                <strong>⚠️ Affiliate Disclosure:</strong> AI Tools Radar is a participant in various affiliate advertising programs designed to provide a means for sites to earn advertising fees by advertising and linking to affiliate services. When you click an affiliate link and make a purchase, we may earn a commission at no additional cost to you. We only recommend tools we've personally tested and believe provide genuine value. Our reviews are never influenced by commission rates.
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#categories">Categories</a>
+                <a href="#compare">Compare</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <p>© 2025 AI Tools Radar. Independent reviews and comparisons. Not affiliated with any tool vendor.</p>
+            <p style="margin-top: 8px;">Built with 💜 for the developer community</p>
+        </div>
+    </footer>
+
+    <script>
+        const tools = [
+            { name: "Cursor", category: "coding", desc: "AI-native code editor built on VS Code. Features chat, inline editing, multi-file context, and multiple AI models.", features: ["Multi-model support", "200K context window", "Agent mode", "Free tier available"], price: "Free / $20/mo", commission: "30% recurring", rating: 4.9, link: "https://cursor.com" },
+            { name: "GitHub Copilot", category: "coding", desc: "AI pair programmer from GitHub. Inline code suggestions, chat in your IDE, and enterprise-grade security.", features: ["Enterprise security", "VS Code / JetBrains", "CLI support", "Copilot Workspace"], price: "$19/mo", commission: "20% recurring", rating: 4.7, link: "https://github.com/features/copilot" },
+            { name: "Claude Code", category: "coding", desc: "Anthropic's terminal-based coding agent with exceptional reasoning, 200K context, and autonomous file editing.", features: ["200K context", "Agentic workflow", "Terminal-native", "Safety-focused"], price: "$20/mo", commission: "30% recurring", rating: 4.8, link: "https://anthropic.com/claude-code" },
+            { name: "Windsurf", category: "coding", desc: "AI-first IDE with Cascade — the autonomous coding agent that can plan, write, and execute across your codebase.", features: ["Cascade agent", "Open source core", "Multi-file editing", "Free tier"], price: "Free / $15/mo", commission: "30% recurring", rating: 4.6, link: "https://windsurf.com" },
+            { name: "Continue.dev", category: "coding", desc: "Open-source AI coding assistant for VS Code and JetBrains. Works with any model via API.", features: ["Open source", "Any model", "VS Code + JetBrains", "Privacy-first"], price: "Free / $20/mo", commission: "30% recurring", rating: 4.5, link: "https://continue.dev" },
+            { name: "ChatGPT", category: "writing", desc: "OpenAI's flagship AI assistant for conversations, writing, code, and creative tasks. The most recognized AI brand.", features: ["GPT-4o model", "Image generation", "Voice mode", "Custom GPTs"], price: "Free / $20/mo", commission: "N/A", rating: 4.9, link: "https://chat.openai.com" },
+            { name: "Claude", category: "writing", desc: "Anthropic's AI assistant with superior reasoning, nuanced writing, and strong safety alignment.", features: ["200K context", "Creative writing", "Artifacts", "Multi-turn mastery"], price: "Free / $20/mo", commission: "20% recurring", rating: 4.8, link: "https://claude.ai" },
+            { name: "Perplexity", category: "writing", desc: "AI-powered search engine with real-time web browsing and cited sources. Answers with references.", features: ["Web search", "Source citations", "Copilot", "Pro search"], price: "Free / $20/mo", commission: "20% recurring", rating: 4.6, link: "https://perplexity.ai" },
+            { name: "Midjourney", category: "design", desc: "The most popular AI image generation tool. Produces stunning, artistic images from text descriptions.", features: ["Latest v6.1", "Discord-based", "High quality", "Commercial use"], price: "$10/mo", commission: "N/A", rating: 4.8, link: "https://midjourney.com" },
+            { name: "DALL-E 3", category: "design", desc: "OpenAI's image generation model integrated into ChatGPT. Easy to use with precise prompt following.", features: ["ChatGPT integration", "Precise prompts", "Variety of styles", "API available"], price: "$20/mo (ChatGPT Plus)", commission: "N/A", rating: 4.5, link: "https://openai.com/dall-e-3" },
+            { name: "Notion AI", category: "productivity", desc: "AI workspace that transforms how teams write, plan, and organize. Search, summarize, and generate within Notion.", features: ["Workspace integration", "Q&A on docs", "Task generation", "Multi-language"], price: "$10/member/mo", commission: "30% recurring", rating: 4.5, link: "https://notion.so/product/ai" },
+            { name: "ElevenLabs", category: "voice", desc: "The leading AI voice synthesis platform. Ultra-realistic speech with emotion control and 29+ languages.", features: ["Cloning voices", "29+ languages", "Emotion control", "API & dubbing"], price: "$5/mo", commission: "30% recurring", rating: 4.7, link: "https://elevenlabs.io" },
+            { name: "Surfer SEO", category: "marketing", desc: "AI-powered SEO platform that optimizes content for search engines. Research, write, and optimize in one tool.", features: ["Content Editor", "Keyword research", "Audit tool", "AI writer"], price: "$89/mo", commission: "25% recurring", rating: 4.5, link: "https://surferseo.com" },
+            { name: "Canva", category: "design", desc: "Design platform with integrated AI features. Magic Studio offers AI image generation, editing, and templates.", features: ["Magic Studio", "100M+ templates", "Brand kits", "Collaboration"], price: "$13/mo", commission: "20% recurring", rating: 4.6, link: "https://canva.com" },
+            { name: "Zapier", category: "productivity", desc: "Automate workflows between apps without code. Now with AI-powered automations and AI actions.", features: ["5000+ apps", "AI actions", "No code", "Multi-step"], price: "Free / $20/mo", commission: "20% recurring", rating: 4.5, link: "https://zapier.com" },
+        ];
+
+        function renderTools(filteredTools) {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = filteredTools.map(t => `
+                <div class="tool-card" data-category="${t.category}">
+                    <div class="tool-header">
+                        <div>
+                            <div class="tool-name">${t.name}</div>
+                            <div class="tool-category">${t.category.charAt(0).toUpperCase() + t.category.slice(1)}</div>
+                        </div>
+                        <div class="rating">
+                            <span class="rating-stars">${'★'.repeat(Math.floor(t.rating))}</span>
+                            <span class="rating-text">${t.rating}/5</span>
+                        </div>
+                    </div>
+                    <div class="tool-body">
+                        <p class="tool-desc">${t.desc}</p>
+                        <ul class="tool-features">
+                            ${t.features.slice(0, 4).map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="tool-footer">
+                        <div>
+                            <div class="tool-commission">${t.commission} <span>commission</span></div>
+                            <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">${t.price}</div>
+                        </div>
+                        <a href="${t.link}" class="tool-link" target="_blank" rel="noopener">View →</a>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Re-trigger reveal animation
+            setTimeout(() => {
+                grid.querySelectorAll('.tool-card').forEach((card, i) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, i * 80);
+                });
+            }, 50);
+        }
+
+        function filterTools() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = tools.filter(t => 
+                t.name.toLowerCase().includes(query) || 
+                t.desc.toLowerCase().includes(query) ||
+                t.category.toLowerCase().includes(query) ||
+                t.features.some(f => f.toLowerCase().includes(query))
+            );
+            renderTools(filtered);
+        }
+
+        function filterByCategory(category) {
+            document.getElementById('searchInput').value = '';
+            renderTools(tools.filter(t => t.category === category));
+            document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Initial render
+        renderTools(tools);
+    </script>
+</body>
+</html>
